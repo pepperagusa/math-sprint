@@ -14,6 +14,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overscroll-behavior-y: contain;
       padding-bottom: env(safe-area-inset-bottom);
     }
 
@@ -26,6 +27,7 @@
       flex-direction: column;
       justify-content: space-between;
       height: 100vh;
+      height: 100-dvh;
       box-sizing: border-box;
       padding-bottom: 20px; /* extra space for Android nav bar */
     }
@@ -43,7 +45,7 @@
     .problem {
       background: #1e293b;
       border-radius: 16px;
-      padding: 30px 20px;
+      padding: 15px 20px;
       font-size: 2.5rem;
       margin: 20px 0;
       user-select: none;
