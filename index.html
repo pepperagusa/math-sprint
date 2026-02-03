@@ -189,6 +189,7 @@
       submitBtn.classList.remove('hidden');
 
       timerEl.textContent = `⏱ ${timeLeft}`;
+      answerEl.value = '';
       randomProblem();
 
       timerId = setInterval(() => {
