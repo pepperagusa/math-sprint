@@ -27,6 +27,7 @@
       justify-content: space-between;
       height: 100vh;
       box-sizing: border-box;
+      padding-bottom: 20px; /* extra space for Android nav bar */
     }
 
     h1 {
@@ -122,7 +123,7 @@
       <div id="keypad" class="keypad hidden"></div>
     </div>
 
-    <div>
+    <div style="padding-bottom: env(safe-area-inset-bottom);">
       <button id="submitBtn" class="start-btn hidden">Submit</button>
       <button id="startBtn" class="start-btn">Start</button>
       <div id="results" class="results hidden"></div>
