@@ -140,7 +140,7 @@
 
     let a = 0;
     let b = 0;
-    let timeLeft = 10;
+    let timeLeft = 60;
     let timerId = null;
     let correct = 0;
     let wrong = 0;
@@ -173,7 +173,7 @@
     function startGame() {
       correct = 0;
       wrong = 0;
-      timeLeft = 10;
+      timeLeft = 60;
 
       startBtn.classList.add('hidden');
       resultsEl.classList.add('hidden');
@@ -203,7 +203,7 @@
       submitBtn.classList.add('hidden');
 
       const score = correct - wrong;
-      const duration = 10;
+      const duration = 60;
       const speed = score < 0 ? 0 : (score / duration).toFixed(2);
       
       resultsEl.innerHTML = `🏁 Score: <strong>${score}</strong><br>⚡ Speed: <strong>${speed}</strong> pts/sec<br><br>✅ Correct: <strong>${correct}</strong><br>❌ Wrong: <strong>${wrong}</strong>`;
