@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Sprint Math</title>
   <style>
     body {
@@ -14,6 +14,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     .app {
@@ -21,6 +22,11 @@
       max-width: 420px;
       padding: 20px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -65,6 +71,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
+      margin-bottom: 10px;
     }
 
     .keypad button,
@@ -85,7 +92,7 @@
 
     .start-btn {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 10px;
       background: #22c55e;
       color: #052e16;
       font-weight: 600;
@@ -103,21 +110,23 @@
 </head>
 <body>
   <div class="app">
-    <h1>Sprint Math</h1>
+    <div>
+      <h1>Sprint Math</h1>
 
-    <div id="timer" class="timer hidden">⏱ 10</div>
+      <div id="timer" class="timer hidden">⏱ 10</div>
 
-    <div id="problem" class="problem hidden">4 × 9</div>
+      <div id="problem" class="problem hidden">4 × 9</div>
 
-    <input id="answer" class="answer hidden" type="text" inputmode="numeric" />
+      <input id="answer" class="answer hidden" type="text" inputmode="numeric" />
 
-    <div id="keypad" class="keypad hidden"></div>
+      <div id="keypad" class="keypad hidden"></div>
+    </div>
 
-    <button id="submitBtn" class="start-btn hidden">Submit</button>
-
-    <button id="startBtn" class="start-btn">Start</button>
-
-    <div id="results" class="results hidden"></div>
+    <div>
+      <button id="submitBtn" class="start-btn hidden">Submit</button>
+      <button id="startBtn" class="start-btn">Start</button>
+      <div id="results" class="results hidden"></div>
+    </div>
   </div>
 
   <script>
