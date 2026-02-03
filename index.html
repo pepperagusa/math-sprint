@@ -206,6 +206,9 @@
       const score = correct - wrong;
       const duration = 10;
       const speed = (score / duration).toFixed(2);
+      if (speed < 0) {
+        speed = 0;
+      }
       resultsEl.innerHTML = `🏁 Score: <strong>${score}</strong><br>⚡ Speed: <strong>${speed}</strong> pts/sec<br><br>✅ Correct: <strong>${correct}</strong><br>❌ Wrong: <strong>${wrong}</strong>`;
       resultsEl.classList.remove('hidden');
 
