@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprint Math</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 12px;
+      font-size: 2rem;
+    }
+
+    .timer {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+
+    .problem {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 30px 20px;
+      font-size: 2.5rem;
+      margin: 20px 0;
+      user-select: none;
+      transition: background 0.15s ease;
+    }
+
+    .flash-correct {
+      background: #16a34a !important;
+    }
+
+    .flash-wrong {
+      background: #dc2626 !important;
+    }
+
+    .answer {
+      width: 100%;
+      font-size: 2rem;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .keypad button,
+    .start-btn {
+      padding: 18px;
+      font-size: 1.5rem;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      background: #334155;
+      color: #f8fafc;
+    }
+
+    .keypad button:active,
+    .start-btn:active {
+      transform: scale(0.96);
+    }
+
+    .start-btn {
+      width: 100%;
+      margin-top: 20px;
+      background: #22c55e;
+      color: #052e16;
+      font-weight: 600;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .results {
+      font-size: 1.4rem;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Sprint Math</h1>
+
+    <div id="timer" class="timer hidden">⏱ 10</div>
+
+    <div id="problem" class="problem hidden">4 × 9</div>
+
+    <input id="answer" class="answer hidden" type="text" inputmode="numeric" />
+
+    <div id="keypad" class="keypad hidden"></div>
+
+    <button id="submitBtn" class="start-btn hidden">Submit</button>
+
+    <button id="startBtn" class="start-btn">Start</button>
+
+    <div id="results" class="results hidden"></div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const timerEl = document.getElementById('timer');
+    const problemEl = document.getElementById('problem');
+    const answerEl = document.getElementById('answer');
+    const keypadEl = document.getElementById('keypad');
+    const resultsEl = document.getElementById('results');
+    const submitBtn = document.getElementById('submitBtn');
+
+    let a = 0;
+    let b = 0;
+    let timeLeft = 10;
+    let timerId = null;
+    let correct = 0;
+    let wrong = 0;
+
+    function randomProblem() {
+      a = Math.floor(Math.random() * 13);
+      b = Math.floor(Math.random() * 13);
+      problemEl.textContent = `${a} × ${b}`;
+    }
+
+    function submitAnswer() {
+      const userAnswer = answerEl.value === '' ? 0 : parseInt(answerEl.value, 10);
+      const isCorrect = userAnswer === a * b;
+
+      if (isCorrect) {
+        correct++;
+        problemEl.classList.add('flash-correct');
+      } else {
+        wrong++;
+        problemEl.classList.add('flash-wrong');
+      }
+
+      setTimeout(() => {
+        problemEl.classList.remove('flash-correct', 'flash-wrong');
+        answerEl.value = '';
+        randomProblem();
+      }, 150);
+    }
+
+    function startGame() {
+      correct = 0;
+      wrong = 0;
+      timeLeft = 10;
+
+      startBtn.classList.add('hidden');
+      resultsEl.classList.add('hidden');
+      timerEl.classList.remove('hidden');
+      problemEl.classList.remove('hidden');
+      answerEl.classList.remove('hidden');
+      keypadEl.classList.remove('hidden');
+      submitBtn.classList.remove('hidden');
+
+      timerEl.textContent = `⏱ ${timeLeft}`;
+      randomProblem();
+
+      timerId = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = `⏱ ${timeLeft}`;
+        if (timeLeft <= 0) endGame();
+      }, 1000);
+    }
+
+    function endGame() {
+      clearInterval(timerId);
+
+      timerEl.classList.add('hidden');
+      problemEl.classList.add('hidden');
+      answerEl.classList.add('hidden');
+      keypadEl.classList.add('hidden');
+      submitBtn.classList.add('hidden');
+
+      const score = correct - wrong;
+      const duration = 10;
+      const speed = (score / duration).toFixed(2);
+      resultsEl.innerHTML = `🏁 Score: <strong>${score}</strong><br>⚡ Speed: <strong>${speed}</strong> pts/sec<br><br>✅ Correct: <strong>${correct}</strong><br>❌ Wrong: <strong>${wrong}</strong>`;
+      resultsEl.classList.remove('hidden');
+
+      startBtn.textContent = 'Play Again';
+      startBtn.classList.remove('hidden');
+    }
+
+    function buildKeypad() {
+      const keys = ['1','2','3','4','5','6','7','8','9','0','⌫'];
+      keys.forEach(key => {
+        const btn = document.createElement('button');
+        btn.textContent = key;
+        btn.addEventListener('click', () => {
+          if (key === '⌫') {
+            answerEl.value = answerEl.value.slice(0, -1);
+          } else {
+            answerEl.value += key;
+          }
+        });
+        keypadEl.appendChild(btn);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (answerEl.classList.contains('hidden')) return;
+
+      if (e.key >= '0' && e.key <= '9') {
+        answerEl.value += e.key;
+      }
+
+      if (e.key === 'Backspace') {
+        answerEl.value = answerEl.value.slice(0, -1);
+      }
+
+      if (e.key === 'Enter') {
+        submitAnswer();
+      }
+    });
+
+    startBtn.addEventListener('click', startGame);
+    submitBtn.addEventListener('click', submitAnswer);
+
+    buildKeypad();
+  </script>
+</body>
+</html>
