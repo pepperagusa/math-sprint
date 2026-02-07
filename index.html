@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Math Sprint</title>
   <style>
     body {
@@ -86,7 +86,7 @@
       border-radius: 5px;
       border: none;
       cursor: pointer;
-      background: #334155;
+      background: #3b82f6;
       color: #f8fafc;
     }
 
@@ -118,6 +118,8 @@
     <div>
       <h1>Math Sprint</h1>
 
+      <button id="startBtn" class="start-btn">Start</button>
+
       <div id="timer" class="timer hidden">⏱ 10</div>
 
       <div id="problem" class="problem hidden">4 × 9</div>
@@ -130,7 +132,6 @@
     <div style="padding-bottom: env(safe-area-inset-bottom);">
       <div id="results" class="results hidden"></div>
       <button id="submitBtn" class="start-btn hidden">Submit</button>
-      <button id="startBtn" class="start-btn">Start</button>
     </div>
   </div>
 
