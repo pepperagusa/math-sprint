@@ -80,27 +80,27 @@
     }
 
     .keypad button,
-    .start-btn {
+    .cta-btn {
+      width: 100%;
       padding: 15px;
-      font-size: 1.5rem;
       border-radius: 5px;
       border: none;
       cursor: pointer;
+      margin-top: 10px;
       background: #3b82f6;
       color: #f8fafc;
+/*      color: #052e16;   */
+      font-size: 1.5rem;
+      font-weight: 600;
     }
 
     .keypad button:active,
-    .start-btn:active {
+    .cta-btn:active {
       transform: scale(0.96);
     }
 
-    .start-btn {
-      width: 100%;
-      margin-top: 10px;
+    .submit-btn {
       background: #22c55e;
-      color: #052e16;
-      font-weight: 600;
     }
 
     .hidden {
@@ -118,7 +118,7 @@
     <div>
       <h1>Math Sprint</h1>
 
-      <button id="startBtn" class="start-btn">Start</button>
+      <button id="startBtn" class="cta-btn">Start</button>
 
       <div id="timer" class="timer hidden">⏱ 10</div>
 
@@ -131,7 +131,7 @@
 
     <div style="padding-bottom: env(safe-area-inset-bottom);">
       <div id="results" class="results hidden"></div>
-      <button id="submitBtn" class="start-btn hidden">Submit</button>
+      <button id="submitBtn" class="cta-btn submit-btn hidden">Submit</button>
     </div>
   </div>
 
