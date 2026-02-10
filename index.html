@@ -110,6 +110,23 @@
       font-size: 1.4rem;
       margin: 40px 0px;
     }
+
+    .progress-container {
+      width: 100%;
+      height: 12px;
+      background: #334155; /* dark background behind bar */
+      border-radius: 6px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      width: 100%; /* starts full */
+      background-color: #16a34a; /* green initially */
+      transition: width 0.2s linear, background-color 0.2s linear;
+    }
+
   </style>
 </head>
 <body>
@@ -120,6 +137,10 @@
       <button id="startBtn" class="cta-btn">Start</button>
 
       <div id="timer" class="timer hidden">⏱ 10</div>
+
+      <div id="progressContainer" class="progress-container hidden">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
 
       <div id="problem" class="problem hidden">4 × 9</div>
 
@@ -157,6 +178,23 @@
     }
 
     function submitAnswer() {
+      const progressContainer = document.getElementById('progressContainer');
+      const progressBar = document.getElementById('progressBar');
+      
+      function updateProgressBar() {
+        const percent = (timeLeft / 60) * 100;
+        progressBar.style.width = percent + '%';
+      
+        // Color logic: green >10, yellow 10–3, red <=3
+        if (timeLeft > 10) {
+          progressBar.style.backgroundColor = '#16a34a'; // green
+        } else if (timeLeft <= 10 && timeLeft > 3) {
+          progressBar.style.backgroundColor = '#facc15'; // yellow
+        } else {
+          progressBar.style.backgroundColor = '#dc2626'; // red
+        }
+      }
+      
       const userAnswer = answerEl.value === '' ? 0 : parseInt(answerEl.value, 10);
       const isCorrect = userAnswer === a * b;
 
@@ -195,8 +233,11 @@
       timerId = setInterval(() => {
         timeLeft--;
         timerEl.textContent = `⏱ ${timeLeft}`;
+        updateProgressBar();
         if (timeLeft <= 0) endGame();
       }, 1000);
+
+      progressContainer.classList.remove('hidden');
     }
 
     function endGame() {
@@ -217,6 +258,8 @@
 
       startBtn.textContent = 'Play Again';
       startBtn.classList.remove('hidden');
+      progressContainer.classList.add('hidden');
+
     }
 
     function buildKeypad() {
