@@ -293,7 +293,7 @@
         answerEl.value = answerEl.value.slice(0, -1);
       }
 
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' || e.key === ' ') {
         submitAnswer();
       }
     });
