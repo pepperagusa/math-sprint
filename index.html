@@ -164,6 +164,24 @@
     const resultsEl = document.getElementById('results');
     const submitBtn = document.getElementById('submitBtn');
 
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBar = document.getElementById('progressBar');
+    
+    function updateProgressBar() {
+      const percent = (timeLeft / 60) * 100;
+      progressBar.style.width = percent + '%';
+    
+      // Color logic: green >10, yellow 10–3, red <=3
+      if (timeLeft > 10) {
+        progressBar.style.backgroundColor = '#16a34a'; // green
+      } else if (timeLeft <= 10 && timeLeft > 3) {
+        progressBar.style.backgroundColor = '#facc15'; // yellow
+      } else {
+        progressBar.style.backgroundColor = '#dc2626'; // red
+      }
+    }
+    
+
     let a = 0;
     let b = 0;
     let timeLeft = 60;
@@ -178,23 +196,6 @@
     }
 
     function submitAnswer() {
-      const progressContainer = document.getElementById('progressContainer');
-      const progressBar = document.getElementById('progressBar');
-      
-      function updateProgressBar() {
-        const percent = (timeLeft / 60) * 100;
-        progressBar.style.width = percent + '%';
-      
-        // Color logic: green >10, yellow 10–3, red <=3
-        if (timeLeft > 10) {
-          progressBar.style.backgroundColor = '#16a34a'; // green
-        } else if (timeLeft <= 10 && timeLeft > 3) {
-          progressBar.style.backgroundColor = '#facc15'; // yellow
-        } else {
-          progressBar.style.backgroundColor = '#dc2626'; // red
-        }
-      }
-      
       const userAnswer = answerEl.value === '' ? 0 : parseInt(answerEl.value, 10);
       const isCorrect = userAnswer === a * b;
 
